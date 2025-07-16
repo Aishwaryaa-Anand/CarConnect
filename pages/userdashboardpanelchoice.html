@@ -1,0 +1,78 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/style.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/img/bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f0f0f0;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1 {
+            color: #00bfff;
+            font-size: 32px;
+            text-shadow: 1px 1px 4px black;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: fit-content;
+            background-color: #00bfff;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 10px;
+            box-shadow: 0 0 6px #00bfff;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #009acd;
+        }
+
+        .btn_logout {
+            display: inline-block;
+            background-color: crimson;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 10px;
+            box-shadow: 0 0 6px crimson;
+            transition: background 0.3s ease;
+        }
+
+        .btn_logout:hover {
+            background-color: darkred;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #00bfff;
+            width: 60%;
+            margin: 20px auto;
+        }
+    </style>
+
+    
+    </head>
+    <body>
+        <h1>CarPooling - Login Panel</h1>
+<hr />
+<a class=btn href='dashboard.html'>Driver Panel View</a>
+<a class=btn href='dashboardpassenger.html'>Passenger Panel View</a>
+<a class="btn_logout" href="index.html">Logout</a>        
+    </body>
+    </html>

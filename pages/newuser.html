@@ -1,0 +1,181 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  
+    <!-- Web3.js-->
+  <script src="node_modules/web3.js-browser/build/web3.js"></script>
+  <script src="node_modules/web3/dist/web3.min.js"></script>
+  <script src="web3connection.js"></script> 
+  <link rel="stylesheet" href="/style.css" />
+
+
+
+  <style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url('/img/bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #ffffff;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 36px;
+        color: #00e6e6;
+        text-shadow: 1px 1px 5px #000;
+    }
+
+    hr {
+        border: 1px solid #00cccc;
+        margin: 10px auto;
+        width: 80%;
+    }
+
+    form {
+        background-color: rgba(0, 0, 0, 0.55);
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        margin: 30px auto;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.6);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title {
+  display: inline-block;
+  width: 200px;
+  font-weight: bold;
+  white-space: nowrap;
+  vertical-align: top;
+  margin-bottom: 10px;
+}
+
+
+    input[type="text"] {
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        font-size: 15px;
+        outline: none;
+    }
+
+    input[type="button"] {
+        padding: 12px;
+        border-radius: 6px;
+        background-color: #00b3b3;
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    input[type="button"]:hover {
+        background-color: #009999;
+    }
+
+    .btn {
+        background-color: #008080;
+        color: white;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background 0.3s ease;
+        margin-right: 20px;
+    }
+
+    .btn:hover {
+        background-color: #006666;
+    }
+
+    div[align="right"] {
+        padding: 10px 20px;
+    }
+</style>
+
+
+    <script>
+
+        $(document).ready(function(){
+           $("#btn_action").click(function(){
+        
+                //Cookies.set()
+                //alert("working");
+                var hashcode=$("#hashaddress").val();
+                var uname=$("#username").val();
+                var uemail=$("#useremail").val();
+                var ucontact=$("#usercontact").val();
+			
+
+      
+				myContract.methods.RegisterUserAccount(hashcode,uname,ucontact,uemail).send({from : hashcode, gas : '3000000'});
+
+                Cookies.set('hashcodecp',hashcode,{expires : 14});
+                Cookies.set('usernamecp',uname,{expires : 14});
+        
+                
+
+
+
+                window.location.replace('userdashboardpanelchoice.html');
+        
+            });
+        
+        });
+        
+        
+        </script>
+
+
+</head>
+<body>
+<h1>CarPooling</h1>
+<hr />
+<div align="right">
+    <a class="btn" href="index.html">Go Back</a>
+  </div>
+<form>
+    <div class="form-row">
+        <span class="title">User Name</span>
+        <input type="text" id="username" placeholder="Write Here" />
+    </div>
+
+    <div class="form-row">
+        <span class="title">User Email</span>
+        <input type="text" id="useremail" placeholder="Write Here" />
+    </div>
+
+    <div class="form-row">
+        <span class="title">User Contact No</span>
+        <input type="text" id="usercontact" placeholder="Write Here" />
+    </div>
+
+    <div class="form-row">
+        <span class="title">HashCode Address</span>
+        <input type="text" id="hashaddress" placeholder="Write Here" />
+    </div>
+
+    <div class="form-row">
+        <input type="button" id="btn_action" value="Create Account" />
+    </div>
+</form>
+
+
+
+</body>
+
+</html>

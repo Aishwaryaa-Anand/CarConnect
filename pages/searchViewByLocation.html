@@ -1,0 +1,278 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+      
+        <!-- Web3.js-->
+      <script src="node_modules/web3.js-browser/build/web3.js"></script>
+      <script src="node_modules/web3/dist/web3.min.js"></script>
+      <script src="web3connection.js"></script> 
+      <link rel="stylesheet" href="/style.css" />
+
+      <style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url('/img/bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #f0f0f0;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 20px;
+        font-size: 32px;
+        color: #00bfff;
+        text-shadow: 1px 1px 4px black;
+    }
+
+    hr {
+        border: none;
+        height: 1px;
+        background-color: #00bfff;
+        margin: 30px 0;
+    }
+
+    fieldset {
+        width: 90%;
+        max-width: 600px;
+        margin: 30px auto;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 12px;
+        border: 2px solid #00bfff;
+        padding: 25px 30px;
+        box-shadow: 0 0 15px #00bfff;
+    }
+
+    legend {
+        font-size: 20px;
+        font-weight: bold;
+        color: #00bfff;
+        padding: 0 10px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .form-group label {
+        width: 40%;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .form-group input[type="text"] {
+        width: 58%;
+        padding: 8px 12px;
+        border: 2px solid #5adef8;
+        border-radius: 6px;
+        background-color: rgba(167, 165, 165, 0.05);
+        color: #f0f0f0;
+    }
+
+    .form-group input[type="placeholder"]{
+        color: #fcf8f8;
+    }
+
+    input[type="button"] {
+        background-color: #00bfff;
+        border: none;
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    input[type="button"]:hover {
+        background-color: #009acd;
+    }
+
+    #ridecount font {
+        font-weight: bold;
+    }
+
+    div[align="right"] {
+        text-align: right;
+        padding: 10px 20px;
+    }
+
+    a.btn {
+        background-color: #007acc;
+        color: white;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+    a.btn:hover {
+        background-color: #005eaa;
+    }
+
+    h4 {
+        text-align: center;
+        margin-top: 40px;
+        color: #00bfff;
+        text-shadow: 1px 1px 3px black;
+    }
+
+    ul {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid #00bfff;
+        padding: 15px;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 10px;
+        list-style-type: none;
+        box-shadow: 0 0 10px #00bfff;
+    }
+
+    ul li {
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #f0f0f0;
+    }
+</style>
+
+
+    <script>
+    var hashcode="";
+    $(document).ready(function(){
+
+          var hashcode=Cookies.get('hashcodecp');
+          var username=Cookies.get('usernamecp');  
+          
+          
+
+           $("#uname").html(username); 
+           $("#hcode").html(hashcode);
+           //balance View
+web3.eth.getBalance(hashcode).then(function(rvalue){
+                rvalue=web3.utils.fromWei(rvalue,"Ether");
+               $("#balance").html(rvalue + "ETH"); 
+
+            })
+           //reading
+
+           $("#btn_search").click(function(){
+
+             var arghfrom=$("#hfrom").val();
+             var arghto=$("#hto").val();   
+             var hashcode=Cookies.get('hashcodecp');
+
+            myContract.methods.searchByLocation(hashcode, arghfrom , arghto ).call().then(
+						function(returnarray){
+							var index=0;
+                            var totalrides=returnarray[1];
+
+                             if(totalrides==0)
+                             {
+                                $("#ridecount").html("<font color=red>Sorry No Ride Found</font>");
+                                $("#ridedetails").html(""); 
+                             }   
+                            else
+                            {
+                                $("#ridecount").html("<font color=green>Total Rides Found: " + totalrides + "</font>");  
+                            }
+
+                               var rideno=1; 
+                            while(index<totalrides)
+                                {
+                                 var obj=returnarray[0][index];       
+                                 var output= "Ride " + rideno +" <ul>";
+                                 output=output + "<li><span class=title>Heading From</span>:" + obj[2] + "</li>";     
+                                 output=output + "<li><span class=title>Heading To</span>:" + obj[3] + "</li>";
+                                 output=output + "<li><span class=title>Ride Date</span>:" + obj[4] + "</li>";
+                                 output=output + "<li><span class=title>Ride Time</span>:" + obj[5] + "</li>";
+                                 output=output + "<li><span class=title>Ride Charges</span>:" + obj[6] + " Eth</li>";
+                                 output=output + "<li><span class=title>Number of Persons</span>:" + obj[7] + "</li>";
+                                 output=output + "<li><span class=title>VType</span>:" + obj[9] + "</li>";
+
+                                 var status=obj[12];   
+                                  
+                                   if(status==true)     
+                                   {
+                                    output=output + "<li><span class=title>Ride Status</span>:Active</li>";
+                                
+                                   }
+                                   else
+                                   {
+                                    output=output + "<li><span class=title>Ride Status</span>: Cancelled</li>";
+                                   }
+                                 output=output + "</ul>";
+
+                                var uhc=obj[1];
+            
+                                 output=output + "<a class=btn href='viewPersonDetails.html?rideno=" +obj[0] + "&personhashcode=" + uhc +"'><font color=green>Person Details</font></a>";
+                                 output=output + "<a class=btn href='mapRideBooking.html?rideno=" +obj[0] + "'><font color=green>Book My Ride</font></a>";
+                                  
+                                 output=output + "<hr />";
+                                 $("#ridedetails").append(output);       
+                                 index++;
+                                 rideno++;
+                                }
+
+
+    						}
+							);
+
+           });
+            
+    });
+
+    </script>
+
+    </head>
+    <body>
+<h1>CarPooling</h1>
+<hr />
+<div>User <span id="uname"></span></div>
+<div>Account ID : <span id="hcode"></span></div>
+<div>Account Balance: <span id="balance"></span></div>
+<hr />
+<div align="right">
+  <a class="btn" href="dashboardpassenger.html">DashBoard</a>
+</div>
+
+<fieldset>
+<legend>Search By LOCATION</legend>
+  <!-- <legend>Search By LOCATION</legend> -->
+  <form>
+    <div class="form-group">
+      <label for="hfrom">Heading From</label>
+      <input type="text" id="hfrom" placeholder="Enter location" />
+    </div>
+
+    <div class="form-group">
+      <label for="hto">Heading To</label>
+      <input type="text" id="hto" placeholder="Enter destination" />
+    </div>
+
+    <div class="form-group" style="justify-content: flex-end;">
+      <input type="button" id="btn_search" value="Search Now" />
+    </div>
+  </form>
+</fieldset>
+
+<h4>Ride Details-<span id=ridecount></span></h4>
+<div>
+<span  id="ridedetails"></span>
+
+</div>
+
+    </body>
+</html>

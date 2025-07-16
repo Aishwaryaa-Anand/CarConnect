@@ -1,0 +1,221 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+  
+    <!-- Web3.js-->
+  <script src="node_modules/web3.js-browser/build/web3.js"></script>
+  <script src="node_modules/web3/dist/web3.min.js"></script>
+  <script src="web3connection.js"></script> 
+  <link rel="stylesheet" href="/style.css" >
+
+  <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/img/bg.jpg'); /* Replace with correct path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            font-size: 32px;
+            color: #00bfff;
+            text-shadow: 1px 1px 4px black;
+        }
+
+        fieldset {
+            width: 50%;
+            margin: 20px auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            border: 2px solid #00bfff;
+            padding: 20px;
+            box-shadow: 0 0 10px #00bfff;
+        }
+
+        legend {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00bfff;
+        }
+
+        .title {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        input[type="button"] {
+            background-color: #00bfff;
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #009acd;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        div[align="right"] {
+            text-align: right;
+            padding: 10px 20px;
+        }
+
+        a[href='newuser.html'] {
+    display: inline-block;
+    background-color: #00bfff;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    margin-right: 20px;
+}
+
+a[href='newuser.html']:hover {
+    background-color: #009acd;
+}
+    </style>
+
+
+
+
+
+    <script>
+
+        $(document).ready(function(){
+           
+                                  
+            $("#btn_action").click(function(){
+        
+                //Cookies.set()
+                //alert("working");
+
+                var hashcode=$("#hashaddressdp").val();
+				
+				myContract.methods.loginPanel(hashcode).call().then(
+						function(returndata){
+							if(returndata[1]==1)
+							{
+								uname=returndata[0];
+								Cookies.set('hashcodecp',hashcode,{expires : 14});
+                				Cookies.set('usernamecp',uname,{expires : 14});
+        				        window.location.replace('dashboard.html');
+							}	
+							else{
+								alert("User Account Not Found");
+							}
+
+    						}
+							);
+	
+                
+        
+            });
+        
+            $("#btn_action2").click(function(){
+        
+        //Cookies.set()
+        //alert("working");
+
+        var hashcode=$("#hashaddresspp").val();
+        
+        myContract.methods.loginPanel(hashcode).call().then(
+                function(returndata){
+                    if(returndata[1]==1)
+                    {
+                        uname=returndata[0];
+                        Cookies.set('hashcodecp',hashcode,{expires : 14});
+                        Cookies.set('usernamecp',uname,{expires : 14});
+                        window.location.replace('dashboardpassenger.html');
+                    }	
+                    else{
+                        alert("User Account Not Found");
+                    }
+
+                    }
+                    );
+
+        
+
+    });
+
+        });
+        
+        
+        </script>
+
+
+</head>
+<body>
+<h1>CarPooling - Login Panel</h1>
+
+<div align="right"><a href='newuser.html'>New User?</a></div>
+
+
+<fieldset>
+    <legend> User - Driver Panel</legend>
+<form id=form1>
+
+<div>
+    <span class="title">User Address</span>
+    <input type="text" id="hashaddressdp" placeholder="Write Here" />
+</div>
+<br />
+<div>
+    <span class="title"></span>
+    <input type="button" id="btn_action" value="Log-in as Driver" />
+</div>
+</form>
+</fieldset>
+
+<fieldset>
+    <legend> User - Passenger Panel</legend>
+<form id=form2>
+
+<div>
+    <span class="title">User Address</span>
+    <input type="text" id="hashaddresspp" placeholder="Write Here" />
+</div>
+<br />
+<div>
+    <span class="title"></span>
+    <input type="button" id="btn_action2" value="Log-in as Passanger" />
+</div>
+</form>
+</fieldset>
+
+</body>
+
+</html>
