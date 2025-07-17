@@ -115,11 +115,14 @@ CARPOOLING/
 
 ## 📸 Screenshots
 
-| Feature | Screenshot |
-|----------|-----------|
-| **Login Panel** | ![Login](./screenshots/login.png) |
-| **New User Registration** | ![New User](./screenshots/new_user.png) |
-| **User Dashboard** | ![Dashboard](./screenshots/dashboard.png) |
+| Feature               | Screenshot                      |
+|----------------------|---------------------------------|
+| **Login Panel**       | ![Login](./img/login.png) |
+| **New User Panel**    | ![New User](./img/newuser.png) |
+| **Driver Dashboard**  | ![Driver Panel](./img/driver_panel.png) |
+| **Passenger Dashboard** | ![Passenger Panel](./img/passenger_panel.png) |
+| **Publish Ride Panel** | ![Publish Ride](./img/publishride.png) |
+| **Payment Interface**  | ![Payment](./img/payment.png) |
 
 ---
 
